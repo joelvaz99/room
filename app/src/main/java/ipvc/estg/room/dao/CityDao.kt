@@ -13,7 +13,7 @@ import ipvc.estg.room.entities.City
 interface CityDao {
 
     @Query("SELECT * from city_table ORDER BY city ASC")
-    fun getAlphabetizedWords(): LiveData<List<City>>
+    fun getAlphabetizedCities(): LiveData<List<City>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(city: City)
