@@ -1,5 +1,7 @@
 package ipvc.estg.room.dao
 
+
+
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -8,7 +10,7 @@ import androidx.room.Query
 import ipvc.estg.room.entities.City
 
 @Dao
-interface WordDao {
+interface CityDao {
 
     @Query("SELECT * from city_table ORDER BY city ASC")
     fun getAlphabetizedWords(): LiveData<List<City>>
