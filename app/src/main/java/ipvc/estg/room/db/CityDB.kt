@@ -4,15 +4,46 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import ipvc.estg.room.dao.CityDao
 import ipvc.estg.room.entities.City
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = arrayOf(City::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(City::class), version = 5, exportSchema = false)
 public abstract class CityDB : RoomDatabase() {
 
     abstract fun CityDao(): CityDao
+
+    private class WordDatabaseCallback(
+        private val scope: CoroutineScope
+    ) : RoomDatabase.Callback() {
+
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            INSTANCE?.let { database ->
+                scope.launch {
+                   var cityDao=database.CityDao()
+                }
+            }
+        }
+
+        suspend fun populateDatabase(CityDao: CityDao) {
+            // Delete all content here.
+            CityDao.deleteAll()
+
+            // Add sample words.
+            var city = City(1, city = "Viana Do Castelo", capital = "Portugal")
+            CityDao.insert(city)
+
+            city = City(2, city = "Porto", capital = "Portugal")
+            CityDao.insert(city)
+
+
+        }
+    }
+
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
@@ -30,7 +61,12 @@ public abstract class CityDB : RoomDatabase() {
                     context.applicationContext,
                     CityDB::class.java,
                         "cities_database"
-                ).build()
+                )
+
+                    //estrategia destruicao
+                    //.fallbackToDestructiveMigration()
+                    .addCallback(WordDatabaseCallback(scope))
+                    .build()
                 INSTANCE = instance
                 return instance
             }
