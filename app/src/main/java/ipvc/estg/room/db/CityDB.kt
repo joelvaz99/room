@@ -35,6 +35,9 @@ public abstract class CityDB : RoomDatabase() {
 
                     city = City(2, city ="Porto", capital ="Portugal" )
                     cityDao.insert(city)
+
+                    city = City(3, city ="Aveiro", capital ="Portugal" )
+                    cityDao.insert(city)
                 }
             }
         }

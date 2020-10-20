@@ -32,4 +32,36 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
     fun insert(city: City) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(city)
     }
+
+    //delete all
+    fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteAll()
+    }
+
+    //delete by city
+    fun deleteByCity(city: String) = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteByCity(city)
+    }
+
+    //listar cidades por pais
+    fun getCitiesByCountry(capital: String): LiveData<List<City>> {
+        return repository.getCitiesByCountry(capital)
+    }
+
+    //listar pais atraves da cidade
+    fun getCountryFromCity(city: String): LiveData<City> {
+        return repository.getCountryFromCity(city)
+    }
+
+    //atualizar cidade
+    fun updateCity(city: City) = viewModelScope.launch() {
+        repository.updateCity(city)
+    }
+
+    //atualizar pais atraves da cidade
+    fun updateCountryFromCity(city: String,capital:String) = viewModelScope.launch() {
+        repository.updateCountryFromCity(city,capital)
+    }
+
+
 }
