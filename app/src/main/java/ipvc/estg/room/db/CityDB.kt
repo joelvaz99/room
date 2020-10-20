@@ -25,25 +25,35 @@ public abstract class CityDB : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                    var cityDao=database.CityDao()
+
+                    // Delete all content here.
+                    cityDao.deleteAll()
+
+                    // Colocar duas cidades de Inicio
+                   var city = City(1, city ="Viana do Castelo", capital ="Portugal" )
+                    cityDao.insert(city)
+
+                    city = City(2, city ="Porto", capital ="Portugal" )
+                    cityDao.insert(city)
                 }
             }
         }
-
+    }
+/*
         suspend fun populateDatabase(CityDao: CityDao) {
             // Delete all content here.
             CityDao.deleteAll()
 
             // Add sample words.
-            var city = City(1, city = "Viana Do Castelo", capital = "Portugal")
+            var city = City( id =  1, city = "Viana Do Castelo", capital = "Portugal")
             CityDao.insert(city)
 
-            city = City(2, city = "Porto", capital = "Portugal")
+            city = City(id = 2, city = "Porto", capital = "Portugal")
             CityDao.insert(city)
-
 
         }
     }
-
+*/
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
@@ -64,7 +74,7 @@ public abstract class CityDB : RoomDatabase() {
                 )
 
                     //estrategia destruicao
-                    //.fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration()
                     .addCallback(WordDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance

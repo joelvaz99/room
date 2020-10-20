@@ -30,8 +30,8 @@ class CityAdapter internal constructor(
         holder.cityItemView.text = current.city
     }
 
-    internal fun setWords(words: List<City>) {
-        this.cities = words
+    internal fun setCities(cities: List<City>) {
+        this.cities = cities
         notifyDataSetChanged()
     }
 

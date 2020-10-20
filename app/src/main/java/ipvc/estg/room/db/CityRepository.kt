@@ -7,13 +7,13 @@ import ipvc.estg.room.entities.City
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
 
-class CityRepository(private val CityDao: CityDao) {
+class CityRepository(private val cityDao: CityDao) {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    val allCities: LiveData<List<City>> = CityDao.getAlphabetizedCities()
+    val allCities: LiveData<List<City>> = cityDao.getAlphabetizedCities()
 
     suspend fun insert(city: City) {
-        CityDao.insert(city)
+        cityDao.insert(city)
     }
 }

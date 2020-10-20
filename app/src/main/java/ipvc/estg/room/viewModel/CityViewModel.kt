@@ -18,12 +18,12 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
     // - We can put an observer on the data (instead of polling for changes) and only update the
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
-    val allCitiess: LiveData<List<City>>
+    val allCities: LiveData<List<City>>
 
     init {
-        val CityDao = CityDB.getDatabase(application,viewModelScope).CityDao()
-        repository = CityRepository(CityDao)
-        allCitiess = repository.allCities
+        val citiesDao = CityDB.getDatabase(application,viewModelScope).CityDao() // cityDao
+        repository = CityRepository(citiesDao)
+        allCities = repository.allCities
     }
 
     /**
